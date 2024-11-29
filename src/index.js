@@ -5,7 +5,7 @@ const path = require('path');
 
 const app = express();
 const port = 3000;
-
+const route = require('./routes/index')
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded(({
@@ -27,20 +27,7 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources/views')); // Đảm bảo đường dẫn đúng tới thư mục views
 
-app.get('/', (req, res) => {
-    res.render('home');
-});
-
-app.get('/news', (req, res) => {
-    res.render('news');
-});
-
-app.get('/search', (req, res) => {
-    res.render('search');
-});
-app.post('/search', (req, res) => {
-    console.log(req.body);
-    res.send('');
-});
+// Routes init
+route(app)
 
 app.listen(port, ()=> console.log(`example app listening at localhost: ${port}`));
