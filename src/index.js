@@ -26,12 +26,12 @@ const hbs = create({
 });
 
 app.engine('hbs', hbs.engine);
-app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'resources/views')); // Đảm bảo đường dẫn đúng tới thư mục views
+                app.set('view engine', 'hbs');
+                        app.set('views', path.join(__dirname, 'resources/views')); // Đảm bảo đường dẫn đúng tới thư mục views
 
-// Routes init
-route(app);
+        // Routes init
+        route(app);
 
-app.listen(port, () =>
-    console.log(`example app listening at localhost: ${port}`),
-);
+            app.listen(port, () =>
+                console.log(`example app listening at localhost: ${port}`),
+            );
