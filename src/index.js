@@ -6,6 +6,11 @@ const path = require('path');
 const app = express();
 const port = 3000;
 const route = require('./routes/index');
+const db = require('./config/db/index');
+
+//connect db
+db.dbConnect();
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(
@@ -26,12 +31,10 @@ const hbs = create({
 });
 
 app.engine('hbs', hbs.engine);
-                app.set('view engine', 'hbs');
-                        app.set('views', path.join(__dirname, 'resources/views')); // Đảm bảo đường dẫn đúng tới thư mục views
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'resources', 'views')); // Đảm bảo đường dẫn đúng tới thư mục views
 
-        // Routes init
-        route(app);
+// Routes init
+route(app);
 
-            app.listen(port, () =>
-                console.log(`example app listening at localhost: ${port}`),
-            );
+app.listen(port, () => console.log(`app listening at localhost: ${port}`));
