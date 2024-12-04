@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const { create } = require('express-handlebars');
 const path = require('path');
-
+const methodOverride = require('method-override');
 const app = express();
 const port = 3000;
 const route = require('./routes/index');
@@ -18,6 +18,7 @@ app.use(
         extended: true,
     }),
 );
+app.use(methodOverride('_method'));
 app.use(express.json());
 // HTTP logger
 // app.use(morgan('combined'));
@@ -28,6 +29,9 @@ const hbs = create({
     defaultLayout: 'main',
     layoutsDir: path.join(__dirname, 'resources/views/layouts/'),
     partialsDir: path.join(__dirname, 'resources/views/partials/'),
+    helpers: {
+        sum: (a, b) => a + b,
+    },
 });
 
 app.engine('hbs', hbs.engine);
