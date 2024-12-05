@@ -1,7 +1,7 @@
 const Course = require('../models/Course');
 
 class MeController {
-    //[GET] /news
+    //[GET] /me/stored/courses
     async storedCourses(req, res, next) {
         await Course.find({})
             .lean()
