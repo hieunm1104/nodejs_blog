@@ -1,6 +1,6 @@
 <div class="mt-4">
-  <h3> Khóa học của tôi</h3>
-  <a href="/me/trash/courses">Khóa học của bạn đã xóa</a>
+  <a href="/me/stored/courses">Danh sách khóa học</a>
+  <h3> Khóa học đã xóa</h3>
   <table class="table mt-4">
     <thead>
       <tr>
@@ -19,15 +19,15 @@
         <td>{{this.level}}</td>
         <td>{{this.createdAt}}</td>
         <td>
-          <a href="/courses/{{this._id}}/edit" class="btn btn-link">Sửa</a>
-          <button type="button" data-toggle="modal" data-id="{{this._id}}" data-target="#exampleModal"
-            class="btn btn-primary">Xóa</button>
+          <a href="" class="btn btn-link btn-restore" data-id="{{this._id}}">Khôi phục</a>
+          <a href="" data-toggle="modal" data-id="{{this._id}}" data-target="#exampleModal"
+            class="btn btn-link">Xóa vĩnh viễn</a>
         </td>
       </tr>
       {{else}}
       <tr>
         <td colspan="5" class="text-center">
-          Bạn chưa đăng khóa học nào. <a href="/courses/create">Đăng khóa học ngay</a>
+          Thùng rác trống.
         </td>
       </tr>
       {{/each}}
@@ -57,20 +57,31 @@
   </div>
 </div>
 
+<form name="restore-course-form" method="POST"></form>
+
 <script>
 
   document.addEventListener('DOMContentLoaded', function () {
+   
+      var restoreForm = document.forms['restore-course-form'];
+      var btnRestore = $('.btn-restore');
     $('#exampleModal').on('show.bs.modal', function (event) {
-      var button =
-        $(event.relatedTarget) // Button that triggered the modal var id =
-      const id = button.data('id'); 
-
-      var btnDeleteCourse =
-        document.getElementById('btn-delete-course').onclick = function () {
-          fetch('/courses/' + id, { method: 'DELETE' }).then(function () {
+      var button = $(event.relatedTarget) // Button that triggered the modal var id =
+       const id = button.data('id'); 
+      var btnDeleteCourse = document.getElementById('btn-delete-course').onclick = function () {
+          fetch('/courses/' + id + '/force', { method: 'DELETE' }).then(function () {
             window.location.reload()
           })
-        }
+        } 
+      }) 
+      //restore btn clicked
+   btnRestore.click(function (e) {
+        e.preventDefault();
+
+        var courseId = $(this).data('id');
+        restoreForm.action = '/courses/' + courseId + '/restore?_method=PATCH';
+        restoreForm.submit();
+
     })
   })
 </script>
