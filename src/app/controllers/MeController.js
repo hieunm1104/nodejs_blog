@@ -2,21 +2,15 @@ const Course = require('../models/Course');
 
 class MeController {
     //[GET] /me/stored/courses
-    async storedCourses(req, res, next) {
-        await Course.countDocuments({ deleted: true })
-            .then((deletedCount) => {
-                // res.render('me/stored-courses', {
-                //     deletedCount,
-                // });
-                console.log(deletedCount);
-            })
-            .catch(next);
-
-        await Course.find({})
-            .lean()
-            .then((courses) => {
+    storedCourses(req, res, next) {
+        Promise.all([
+            Course.find({}).lean(), // Lấy tất cả các khóa học chưa bị xóa
+            Course.countDocumentsWithDeleted({ deleted: true }), // Đếm số lượng khóa học đã bị xóa
+        ])
+            .then(([courses, deletedCount]) => {
                 res.render('me/stored-courses', {
                     courses,
+                    deletedCount,
                 });
             })
             .catch(next);

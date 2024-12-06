@@ -1,6 +1,7 @@
 <div class="mt-4">
   <h3> Khóa học của tôi</h3>
   <a href="/me/trash/courses">Khóa học của bạn đã xóa</a>
+  <h1>SL khóa học đã xóa là: {{deletedCount}}</h1>
   <table class="table mt-4">
     <thead>
       <tr>
@@ -34,7 +35,6 @@
     </tbody>
   </table>
 </div>
-
 {{! Confirm delete course }}
 <div class="modal" tabindex="-1" id="exampleModal">
   <div class="modal-dialog">
@@ -58,7 +58,7 @@
 </div>
 
 <script>
-
+   
   document.addEventListener('DOMContentLoaded', function () {
     $('#exampleModal').on('show.bs.modal', function (event) {
       var button =
