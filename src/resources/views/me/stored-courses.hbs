@@ -16,7 +16,7 @@
       <option value="edit">Sửa</option>
     </select>
 
-    <button type="submit" class="btn btn-primary check-all-submit-btn disabled">Thực hiện</button>
+    <button type="submit" class="btn btn-primary check-all-submit-btn" disabled='disabled'>Thực hiện</button>
   </div>
 
   <table class="table mt-4">
@@ -84,7 +84,8 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     var checkboxBtn = $('.check-all-submit-btn');
-    var containerForm = document.forms['container-form'];
+   // {{!-- var containerForm = document.forms['container-form']; --}}
+    var containerForm = $('form[name="container-form"]');
     var idSelectAll = document.getElementById('exampleFormControlSelect1');
     console.log(idSelectAll);
     //checkbox all click
@@ -108,25 +109,11 @@
       renderCheckAllSubmitBtn();
     })
 
-    //check all submit button click
-    checkboxBtn.click(function (e) {
-      e.preventDefault();
-      var isSubmitable = !$(this).hasClass('disabled');
-      if (isSubmitable) {
-        containerForm.submit();
-      }
-      });
-    checkboxBtn.on('submit', function (e) {
-        var isSubmitable = !$(this).hasClass('disabled');
-        if (!isSubmitable) {
-          e.preventDefault();
-        }
-      })
       //re-render check all submit button
     function renderCheckAllSubmitBtn() {
       var checkedCount = $('input[name="courseIds[]"]:checked').length;
       console.log(checkedCount);
-      checkedCount > 0 ? checkboxBtn.removeClass('disabled') : checkboxBtn.addClass('disabled')
+      checkedCount > 0 ? checkboxBtn.attr('disabled', false) : checkboxBtn.attr('disabled', true)
     }
 
     $('#exampleModal').on('show.bs.modal', function (event) {
